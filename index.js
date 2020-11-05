@@ -1,5 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {Provider} from 'react-redux'
 
-ReactDOM.render(<div>Howdy World!</div>, document.getElementById('app')
+import './index.css'
+
+import store from './client/store'
+
+ReactDOM.render(
+  <Provider store={store}>
+    <div>Howdy World!</div> 
+  </Provider>, 
+  document.getElementById('app')
 );
