@@ -2,6 +2,7 @@
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
+const {db} = require('./db');
 
 //app
 const express = require('express');
@@ -35,7 +36,16 @@ app.use((err, req, res, next) => {
 //listen for requests
 const PORT = process.env.PORT || 1337; // this can be very useful if you deploy to Heroku!
 
-app.listen(PORT, () => {
-  console.log('beep, beep, beep');
-  console.log(`server set to recieve on port ${PORT}`);
-});
+const startServer = async () =>{
+  try{
+    await db.sync();
+    app.listen(PORT, () => {
+      console.log('beep, beep, beep');
+      console.log(`server set to recieve on port ${PORT}`);
+    });
+  } catch (err) {
+    console.log('Uh oh. Something done happened during server start up', err);
+  }
+}
+
+startServer();
